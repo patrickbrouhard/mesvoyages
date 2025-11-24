@@ -21,24 +21,46 @@
 {% block top %}
     <div class="container">
         <!-- titre -->
-        <div class="text-center">
-            <h1>Mes voyages</h1>
-            <p>Je vous présente les villes que j'ai visitées lors de mes voyages.</p>
+        <div class="container position-relative mb-3">
+            <!-- titre centré -->
+            <div class="text-center">
+                <h1>Mes voyages</h1>
+                <p>Je vous présente les villes que j'ai visitées lors de mes voyages.</p>
+            </div>
+
+            <!-- bouton en haut à droite -->
+            <div class="position-absolute top-50 end-0 translate-middle-y">
+                {% if app.user %}
+                    <a href="{{ path('logout') }}" class="btn btn-outline-primary">Déconnexion</a>
+                {% else %}
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-primary">Connexion</a>
+                {% endif %}
+            </div>
         </div>
         <!-- menu -->
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('voyages') }}">Voyages</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link" href="{{ path('contact') }}">Contact</a>
-                </li>
-              </ul>
+                <!-- liens publics à gauche -->
+                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('accueil') }}">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('voyages') }}">Voyages</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ path('contact') }}">Contact</a>
+                    </li>
+                </ul>
+
+                <!-- liens admin à droite -->
+                {% if is_granted('ROLE_ADMIN') %}
+                    <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ path('admin.voyages') }}">Tableau de bord</a>
+                        </li>
+                    </ul>
+                {% endif %}
             </div>
         </nav>
     </div>
